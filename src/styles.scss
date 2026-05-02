@@ -2,6 +2,7 @@
 @use '@angular/material' as mat;
 
 :root {
+  --white-color: #ffffff;
   --border-color-blue-light: #abc7ff4a;
   --font-color-dark: var(--mat-sys-primary);
   --background-color-light: var(--mat-sys-primary-container);
