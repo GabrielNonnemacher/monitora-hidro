@@ -1,0 +1,33 @@
+
+@use '@angular/material' as mat;
+
+:root {
+  --border-color-blue-light: #abc7ff4a;
+  --font-color-dark: var(--mat-sys-primary);
+  --background-color-light: var(--mat-sys-primary-container);
+}
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: var(--font-color-dark);
+}
+
+html {
+  height: 100%;
+  @include mat.theme((
+    color: (
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+}
+
+body {
+  height: 100vh;
+}
+

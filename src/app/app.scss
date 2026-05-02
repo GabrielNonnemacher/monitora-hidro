@@ -1,0 +1,14 @@
+.app {
+  font: var(--mat-sys-body-medium);
+  min-height: 100%;
+}
+
+.dark {
+  color-scheme: dark;
+  background-color: var(--mat-sys-surface);
+}
+
+.light {
+  color-scheme: light;
+  background-color: var(--mat-sys-surface);
+}

@@ -1,0 +1,10 @@
+.chart {
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  canvas {
+    min-height: 100%;
+  }
+}
