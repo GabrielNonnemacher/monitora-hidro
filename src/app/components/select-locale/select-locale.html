@@ -1,0 +1,47 @@
+<section class="select-locale">
+  <span class="select-locale__title">Selecione seu endereço</span>
+
+  <form class="select-locale__form">
+    <mat-form-field appearance="outline">
+      <mat-label>Estado</mat-label>
+      <mat-select [value]="state()" (valueChange)="state.set($event)">
+        @for (state of states; track state) {
+          <mat-option [value]="state">
+            {{ state }}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Cidade</mat-label>
+      <mat-select [value]="city()" (valueChange)="city.set($event)" [disabled]="!state()">
+        @for (city of cities(); track city) {
+          <mat-option [value]="city">
+            {{ city }}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Bairro</mat-label>
+      <mat-select
+        [value]="neighborhood()"
+        (valueChange)="neighborhood.set($event)"
+        [disabled]="!city()"
+      >
+        @for (neighborhood of neighborhoods(); track neighborhood) {
+          <mat-option [value]="neighborhood">
+            {{ neighborhood }}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <button class="confirm-button" (click)="onSubmit()">
+      <mat-icon>check</mat-icon>
+      Confirmar
+    </button>
+  </form>
+</section>
