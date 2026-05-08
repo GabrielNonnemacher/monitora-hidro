@@ -6,7 +6,7 @@ export type MeasurementDocument = Measurement & Document;
 
 @Schema({
   collection: 'measurements',
-  timestamps: true,
+  versionKey: false,
 })
 export class Measurement {
   @Prop({ required: true })

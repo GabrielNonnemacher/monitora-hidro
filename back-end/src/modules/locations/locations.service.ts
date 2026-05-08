@@ -1,22 +1,21 @@
+import { LocationPoint } from '@monitora-hidro/schemas';
+import { ApiResponse } from '@monitora-hidro/shared';
 import { Injectable } from '@nestjs/common';
-
 import { InjectModel } from '@nestjs/mongoose';
-
 import { Model } from 'mongoose';
-import { ApiResponse } from '../shared/models/response';
-import { MonitoringLocation } from './location.schema';
-import { CreateLocationDto } from './models/create';
+import { CreateLocationPointDto } from './dto/create-location.dto';
+import { LocationPointDto } from './dto/response-location.dto';
 
 @Injectable()
 export class LocationsService {
   constructor(
-    @InjectModel(MonitoringLocation.name)
-    private locationModel: Model<MonitoringLocation>,
+    @InjectModel(LocationPoint.name)
+    private locationModel: Model<LocationPoint>,
   ) {}
 
   async create(
-    data: CreateLocationDto,
-  ): Promise<ApiResponse<MonitoringLocation>> {
+    data: CreateLocationPointDto,
+  ): Promise<ApiResponse<LocationPointDto>> {
     const location = await this.locationModel.create(data);
     return {
       success: true,
@@ -24,7 +23,7 @@ export class LocationsService {
     };
   }
 
-  async findAll(): Promise<ApiResponse<MonitoringLocation[]>> {
+  async findAll(): Promise<ApiResponse<LocationPoint[]>> {
     const locations = await this.locationModel.find();
     return {
       success: true,
@@ -32,12 +31,8 @@ export class LocationsService {
     };
   }
 
-  async findOne(
-    locationId: number,
-  ): Promise<ApiResponse<MonitoringLocation | null>> {
-    const location = await this.locationModel.findOne({
-      locationId,
-    });
+  async findOne(cityId: number): Promise<ApiResponse<LocationPoint | null>> {
+    const location = await this.locationModel.findOne({ cityId });
     return {
       success: !!location,
       data: location,

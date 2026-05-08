@@ -1,9 +1,8 @@
+import { Measurement, MeasurementSchema } from '@monitora-hidro/schemas';
 import { Module } from '@nestjs/common';
-
 import { MongooseModule } from '@nestjs/mongoose';
-import { MeasurementsController } from './measurement.controller';
-import { Measurement, MeasurementSchema } from './measurement.schema';
-import { MeasurementsService } from './measurement.service';
+import { MeasurementsController } from './measurements.controller';
+import { MeasurementsService } from './measurements.service';
 
 @Module({
   imports: [
@@ -14,8 +13,7 @@ import { MeasurementsService } from './measurement.service';
       },
     ]),
   ],
-  providers: [MeasurementsService],
-  exports: [MeasurementsService],
   controllers: [MeasurementsController],
+  providers: [MeasurementsService],
 })
 export class MeasurementsModule {}

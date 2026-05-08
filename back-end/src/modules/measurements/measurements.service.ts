@@ -1,11 +1,9 @@
+import { Measurement } from '@monitora-hidro/schemas';
+import { ApiResponse } from '@monitora-hidro/shared';
 import { Injectable } from '@nestjs/common';
-
 import { InjectModel } from '@nestjs/mongoose';
-
 import { Model } from 'mongoose';
-import { ApiResponse } from '../shared/models/response';
-import { Measurement } from './measurement.schema';
-import { CreateMeasurementDto } from './models/create';
+import { CreateMeasurementDto } from './dto/create-measurement.dto';
 
 @Injectable()
 export class MeasurementsService {

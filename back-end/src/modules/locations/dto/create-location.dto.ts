@@ -1,8 +1,8 @@
-import { IsNumber, IsString } from 'class-validator';
+import { IsBoolean, IsNumber, IsString } from 'class-validator';
 
-export class CreateLocationDto {
+export class CreateLocationPointDto {
   @IsNumber()
-  locationId!: number;
+  cityId!: number;
 
   @IsString()
   name!: string;
@@ -18,4 +18,7 @@ export class CreateLocationDto {
 
   @IsNumber()
   extreme!: number;
+
+  @IsBoolean()
+  active!: boolean;
 }

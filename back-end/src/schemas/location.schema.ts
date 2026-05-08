@@ -2,18 +2,17 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 import { Document } from 'mongoose';
 
-export type MonitoringLocationDocument = MonitoringLocation & Document;
+export type LocationPointDocument = LocationPoint & Document;
 
 @Schema({
   collection: 'locations',
-  timestamps: true,
+  versionKey: false,
 })
-export class MonitoringLocation {
+export class LocationPoint {
   @Prop({
     required: true,
-    unique: true,
   })
-  locationId!: number;
+  cityId!: number;
 
   @Prop({ required: true })
   name!: string;
@@ -29,7 +28,9 @@ export class MonitoringLocation {
 
   @Prop({ required: true })
   extreme!: number;
+
+  @Prop({ required: true })
+  active!: boolean;
 }
 
-export const MonitoringLocationSchema =
-  SchemaFactory.createForClass(MonitoringLocation);
+export const LocationPointSchema = SchemaFactory.createForClass(LocationPoint);

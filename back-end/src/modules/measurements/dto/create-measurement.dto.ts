@@ -1,22 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsDateString, IsNumber } from 'class-validator';
+import { ApiPropertyExamples } from '../../../shared/utils/api-property.example';
 
 export class CreateMeasurementDto {
-  @ApiProperty({
-    example: '2026-05-07T12:00:00Z',
-  })
+  @ApiProperty(ApiPropertyExamples.Date)
   @IsDateString()
   id!: Date;
 
-  @ApiProperty({
-    example: 3.5,
-  })
+  @ApiProperty(ApiPropertyExamples.Number)
   @IsNumber()
   measurement!: number;
 
-  @ApiProperty({
-    example: 1,
-  })
+  @ApiProperty(ApiPropertyExamples.Number)
   @IsNumber()
   location_id!: number;
 }
