@@ -12,7 +12,7 @@ export class LocationPoint {
   @Prop({
     required: true,
   })
-  cityId!: number;
+  cityId!: string;
 
   @Prop({ required: true })
   name!: string;
