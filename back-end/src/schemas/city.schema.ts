@@ -9,7 +9,7 @@ export type CityDocument = City & Document;
 })
 export class City {
   @Prop({ required: true })
-  stateId!: number;
+  stateId!: string;
 
   @Prop({ required: true })
   name!: string;

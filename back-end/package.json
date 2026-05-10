@@ -64,6 +64,11 @@
       "json",
       "ts"
     ],
+    "moduleNameMapper": {
+      "^@monitora-hidro/schemas$": "<rootDir>/schemas",
+      "^@monitora-hidro/shared$": "<rootDir>/shared",
+      "^@monitora-hidro/modules$": "<rootDir>/modules"
+    },
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
@@ -71,6 +76,9 @@
     },
     "collectCoverageFrom": [
       "**/*.(t|j)s"
+    ],
+    "coveragePathIgnorePatterns": [
+      "\\.module\\.ts$"
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"

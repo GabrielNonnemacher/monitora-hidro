@@ -1,8 +1,11 @@
 import { IsBoolean, IsNumber, IsString } from 'class-validator';
 
 export class CityDto {
-  @IsNumber()
-  stateId!: number;
+  @IsString()
+  id!: string;
+
+  @IsString()
+  stateId!: string;
 
   @IsString()
   name!: string;

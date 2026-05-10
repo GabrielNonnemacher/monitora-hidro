@@ -11,11 +11,6 @@ export class State {
   @Prop({
     required: true,
   })
-  stateId!: number;
-
-  @Prop({
-    required: true,
-  })
   name!: string;
 
   @Prop({
