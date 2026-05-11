@@ -22,10 +22,8 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
     "types": ["node", "jest"],
-    "ignoreDeprecations": "6.0",
-    "baseUrl": "./src",
     "paths": {
-      "@monitora-hidro/*": ["*"]
+      "@monitora-hidro/*": ["./src/*"]
     }
   }
 }
