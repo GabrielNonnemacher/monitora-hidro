@@ -48,9 +48,6 @@ export class HmacGuard implements CanActivate {
       secret!,
     );
 
-    console.log(signature);
-    console.log(expectedSignature);
-
     if (signature !== expectedSignature) {
       throw new UnauthorizedException('Invalid signature');
     }
