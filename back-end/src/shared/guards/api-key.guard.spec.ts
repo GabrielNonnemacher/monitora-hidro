@@ -1,12 +1,11 @@
 import { ExecutionContext, UnauthorizedException } from '@nestjs/common';
-import { ApiKeyGuard } from './api-key';
+import { ApiKeyGuard } from './api-key.guard';
 
 describe('ApiKeyGuard', () => {
   let guard: ApiKeyGuard;
 
   beforeEach(() => {
     guard = new ApiKeyGuard();
-
     process.env.API_KEY = 'prod-key';
     process.env.API_KEY_TEST = 'test-key';
   });

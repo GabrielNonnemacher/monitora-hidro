@@ -1,6 +1,16 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  ApiKeyGuard,
+  ApiKeyGuardExample,
+  ApiResponse,
+  HmacApiKeyHeader,
+  HmacGuard,
+  HmacSignatureHeader,
+  HmacTimestampHeader,
+} from '@monitora-hidro/shared';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { ApiHeader, ApiTags } from '@nestjs/swagger';
 import { CreateMeasurementDto } from './dto/create-measurement.dto';
+import { MeasurementDto } from './dto/response-measurement.dto';
 import { MeasurementsService } from './measurements.service';
 
 @ApiTags('measurements')
@@ -8,13 +18,32 @@ import { MeasurementsService } from './measurements.service';
 export class MeasurementsController {
   constructor(private readonly measurementsService: MeasurementsService) {}
 
-  @Post()
-  async create(@Body() body: CreateMeasurementDto) {
-    return this.measurementsService.create(body);
+  @UseGuards(ApiKeyGuard)
+  @ApiHeader(ApiKeyGuardExample)
+  @Get(':locationId/last')
+  public async findLastMeasurement(
+    @Param('locationId') locationId: string,
+  ): Promise<ApiResponse<MeasurementDto | null>> {
+    return this.measurementsService.findLastMeasurement(locationId);
   }
 
-  @Get()
-  async findAll() {
-    return this.measurementsService.findAll();
+  @UseGuards(ApiKeyGuard)
+  @ApiHeader(ApiKeyGuardExample)
+  @Get(':locationId/dashboard')
+  public async findAllMeasurements(
+    @Param('locationId') locationId: string,
+  ): Promise<ApiResponse<MeasurementDto[] | null>> {
+    return this.measurementsService.findAllMeasurements(locationId);
+  }
+
+  @UseGuards(HmacGuard)
+  @ApiHeader(HmacApiKeyHeader)
+  @ApiHeader(HmacTimestampHeader)
+  @ApiHeader(HmacSignatureHeader)
+  @Post()
+  public create(
+    @Body() body: CreateMeasurementDto,
+  ): Promise<ApiResponse<MeasurementDto | null>> {
+    return this.measurementsService.create(body);
   }
 }
