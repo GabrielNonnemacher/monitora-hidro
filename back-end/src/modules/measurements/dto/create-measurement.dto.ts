@@ -1,17 +1,17 @@
+import { ApiPropertyExamples, LocationIdExample } from '@monitora-hidro/shared';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDateString, IsNumber } from 'class-validator';
-import { ApiPropertyExamples } from '../../../shared/utils/api-property.example';
+import { IsDateString, IsNumber, IsString } from 'class-validator';
 
 export class CreateMeasurementDto {
   @ApiProperty(ApiPropertyExamples.Date)
   @IsDateString()
-  id!: Date;
+  date!: Date;
 
   @ApiProperty(ApiPropertyExamples.Number)
   @IsNumber()
   measurement!: number;
 
-  @ApiProperty(ApiPropertyExamples.Number)
-  @IsNumber()
-  location_id!: number;
+  @ApiProperty(LocationIdExample)
+  @IsString()
+  locationId!: string;
 }

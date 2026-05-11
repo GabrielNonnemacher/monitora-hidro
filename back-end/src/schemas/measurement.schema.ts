@@ -9,14 +9,16 @@ export type MeasurementDocument = Measurement & Document;
   versionKey: false,
 })
 export class Measurement {
+  id!: String;
+
   @Prop({ required: true })
-  id!: Date;
+  date!: Date;
 
   @Prop({ required: true })
   measurement!: number;
 
   @Prop({ required: true })
-  location_id!: number;
+  locationId!: string;
 }
 
 export const MeasurementSchema = SchemaFactory.createForClass(Measurement);
