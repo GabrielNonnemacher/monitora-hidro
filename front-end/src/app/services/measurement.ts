@@ -1,13 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MeasurementService {
-  private readonly BASE_URL = process.env['API_URL'] ?? '';
-  private readonly BASE_KEY = process.env['API_KEY'] ?? '';
+  private readonly BASE_URL = environment.apiUrl;
+  private readonly BASE_KEY = environment.apiKey;
 
   private readonly http = inject(HttpClient);
 
