@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "root": "front-end",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/monitora-hidro/browser",
+  "framework": "angular",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
