@@ -8,7 +8,7 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: ['http://localhost:4200', 'https://meu-front.vercel.app'],
+    origin: ['http://localhost:4200', 'https://monitora-hidro.vercel.app'],
   });
 
   app.useGlobalPipes(

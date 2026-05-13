@@ -1,14 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { map, Observable, of } from 'rxjs';
-import { environment } from '../shared/environment/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocationsService {
-  private readonly BASE_URL = environment.apiUrl;
-  private readonly BASE_KEY = environment.apiKey;
+  private readonly BASE_URL = process.env['API_URL'] ?? '';
+  private readonly BASE_KEY = process.env['API_KEY'] ?? '';
+
   private readonly http = inject(HttpClient);
 
   private readonly statesCache = signal<any[]>([]);
