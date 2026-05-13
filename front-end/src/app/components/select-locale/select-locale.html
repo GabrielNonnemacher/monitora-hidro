@@ -4,42 +4,48 @@
   <form class="select-locale__form">
     <mat-form-field appearance="outline">
       <mat-label>Estado</mat-label>
-      <mat-select [value]="state()" (valueChange)="state.set($event)">
-        @for (state of states; track state) {
-          <mat-option [value]="state">
-            {{ state }}
+      <mat-select (valueChange)="onStateChange($event)">
+        @for (state of states(); track state) {
+          <mat-option [value]="state.value">
+            {{ state.viewValue }}
           </mat-option>
         }
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" [class.disabled]="!stateId() || cities().length === 0">
       <mat-label>Cidade</mat-label>
-      <mat-select [value]="city()" (valueChange)="city.set($event)" [disabled]="!state()">
+      <mat-select
+        (valueChange)="onCityChange($event)"
+        [disabled]="!stateId() || cities().length === 0"
+      >
         @for (city of cities(); track city) {
-          <mat-option [value]="city">
-            {{ city }}
+          <mat-option [value]="city.value" [disabled]="!city.active">
+            {{ city.viewValue }}
           </mat-option>
         }
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field
+      appearance="outline"
+      [class.disabled]="!cityId() || locationPoints().length === 0"
+    >
       <mat-label>Bairro</mat-label>
       <mat-select
-        [value]="neighborhood()"
-        (valueChange)="neighborhood.set($event)"
-        [disabled]="!city()"
+        [value]="locationPointId()"
+        (valueChange)="onLocationPointChange($event)"
+        [disabled]="!cityId() || locationPoints().length === 0"
       >
-        @for (neighborhood of neighborhoods(); track neighborhood) {
-          <mat-option [value]="neighborhood">
-            {{ neighborhood }}
+        @for (locationPoint of locationPoints(); track locationPoint) {
+          <mat-option [value]="locationPoint.value" [disabled]="!locationPoint.active">
+            {{ locationPoint.viewValue }}
           </mat-option>
         }
       </mat-select>
     </mat-form-field>
 
-    <button class="confirm-button" (click)="onSubmit()">
+    <button class="confirm-button" (click)="onSubmit()" [class.disabled]="!locationPointId()">
       <mat-icon>check</mat-icon>
       Confirmar
     </button>

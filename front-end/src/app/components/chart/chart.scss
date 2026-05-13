@@ -1,10 +1,13 @@
 .chart {
-  height: 280px;
+  width: 100%;
+  min-height: 440px;
+  max-height: 480px;
   display: flex;
   align-items: center;
   justify-content: center;
 
   canvas {
-    min-height: 100%;
+    width: 100% !important;
+    height: 100% !important;
   }
 }

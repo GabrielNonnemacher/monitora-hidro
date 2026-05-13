@@ -1,7 +1,87 @@
-<mat-toolbar class="toolbar">
-  <strong>Monitora Hidro</strong>
+<mat-toolbar class="toolbar" [class.toolbar--mobile]="isMobile | async">
+  <div class="toolbar__top">
+    <strong>Monitora Hidro</strong>
 
-  <button matMiniFab aria-label="Button of set the theme from application" (click)="onChangeTheme()">
-    <mat-icon>{{ icon() }}</mat-icon>
-  </button>
+    @if (!(isMobile | async)) {
+      <button
+        matMiniFab
+        aria-label="Button of set the theme from application"
+        (click)="onChangeTheme()"
+      >
+        <mat-icon>{{ icon() }}</mat-icon>
+      </button>
+    }
+
+    @if (isMobile | async) {
+      <button mat-icon-button (click)="toggleSidenav()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    }
+  </div>
+
+  <div>
+    <mat-divider></mat-divider>
+  </div>
+
+  @if (!(isMobile | async)) {
+    <div class="toolbar__buttons">
+      <button class="toolbar__button" matButton="elevated" (click)="onHomeClick()">Início</button>
+      <button class="toolbar__button" matButton="elevated" (click)="onHistoryClick()">
+        Histórico
+      </button>
+      <button class="toolbar__button" matButton="elevated" (click)="onAlertsClick()">
+        Alertas
+      </button>
+      <button class="toolbar__button" matButton="elevated" (click)="onNewsClick()">Notícias</button>
+      <button class="toolbar__button" matButton="elevated" (click)="onUsefulLinksClick()">
+        Links Úteis
+      </button>
+      <button class="toolbar__button" matButton="elevated" (click)="onAboutClick()">Sobre</button>
+    </div>
+  }
 </mat-toolbar>
+
+<mat-sidenav-container class="toolbar-sidenav-container">
+  <mat-sidenav
+    #sidenav
+    mode="over"
+    position="end"
+    [(opened)]="sidenavOpened"
+    (closed)="sidenavOpened.set(false)"
+  >
+    <mat-nav-list>
+      <a mat-list-item (click)="onHomeClick()">
+        <mat-icon matListItemIcon>home</mat-icon>
+        <span matListItemTitle>Início</span>
+      </a>
+      <a mat-list-item (click)="onHistoryClick()">
+        <mat-icon matListItemIcon>history</mat-icon>
+        <span matListItemTitle>Histórico</span>
+      </a>
+      <a mat-list-item (click)="onAlertsClick()">
+        <mat-icon matListItemIcon>warning</mat-icon>
+        <span matListItemTitle>Alertas</span>
+      </a>
+      <a mat-list-item (click)="onNewsClick()">
+        <mat-icon matListItemIcon>article</mat-icon>
+        <span matListItemTitle>Notícias</span>
+      </a>
+      <a mat-list-item (click)="onUsefulLinksClick()">
+        <mat-icon matListItemIcon>link</mat-icon>
+        <span matListItemTitle>Links Úteis</span>
+      </a>
+      <a mat-list-item (click)="onAboutClick()">
+        <mat-icon matListItemIcon>info</mat-icon>
+        <span matListItemTitle>Sobre</span>
+      </a>
+      <mat-divider></mat-divider>
+      <a mat-list-item (click)="onChangeTheme()">
+        <mat-icon matListItemIcon>{{ icon() }}</mat-icon>
+        <span matListItemTitle>Tema</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="toolbar-sidenav-content">
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

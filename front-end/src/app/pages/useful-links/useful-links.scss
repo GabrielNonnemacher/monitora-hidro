@@ -1,0 +1,62 @@
+.useful-links {
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  &__list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__icon {
+    font-size: 2rem;
+    width: 2rem;
+    height: 2rem;
+    color: var(--text-color);
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  &__item-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-color);
+  }
+
+  &__item-description {
+    font-size: 0.875rem;
+    color: var(--text-color-secondary);
+  }
+}
+
+.card {
+  width: 100%;
+  padding: 1rem 1rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border: 2px solid var(--border-color-blue-light);
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px var(--border-color-blue-light);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
