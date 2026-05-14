@@ -1,4 +1,4 @@
-import { Component, computed, inject, model, signal } from '@angular/core';
+import { Component, computed, effect, inject, model, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
@@ -6,9 +6,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { map } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { BreakpointService } from '../../services/breakpoint.service';
 
 @Component({
   selector: 'toolbar',
@@ -26,12 +25,10 @@ import { AsyncPipe } from '@angular/common';
 })
 export class Toolbar {
   private readonly router = inject(Router);
-  private readonly breakpointObserver = inject(BreakpointObserver);
+  private readonly breakpointService = inject(BreakpointService);
 
   protected readonly sidenavOpened = signal(false);
-  protected readonly isMobile = this.breakpointObserver
-    .observe('(max-width: 725px)')
-    .pipe(map((result) => result.matches));
+  protected readonly isMobile = this.breakpointService.isMobile;
 
   public readonly contrastActive = model<boolean>();
   public readonly isDarkTheme = model<boolean>();

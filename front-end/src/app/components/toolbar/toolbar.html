@@ -1,6 +1,6 @@
 <mat-toolbar class="toolbar" [class.toolbar--mobile]="isMobile | async">
-  <div class="toolbar__top">
-    <strong>Monitora Hidro</strong>
+  <div class="toolbar__top" [class.toolbar__top--mobile]="isMobile | async">
+    <h1 class="toolbar__logo">Monitora Hidro</h1>
 
     @if (!(isMobile | async)) {
       <div class="toolbar__modes">
@@ -23,35 +23,32 @@
     }
 
     @if (isMobile | async) {
-      <button mat-icon-button (click)="toggleSidenav()">
+      <button
+        matMiniFab
+        aria-label="Button of set the theme from application"
+        (click)="toggleSidenav()"
+      >
         <mat-icon>menu</mat-icon>
       </button>
     }
   </div>
 
-  <div>
-    <mat-divider></mat-divider>
-  </div>
-
   @if (!(isMobile | async)) {
     <div class="toolbar__buttons">
-      <button class="toolbar__button" matButton="elevated" (click)="onHomeClick()">Início</button>
-      <button class="toolbar__button" matButton="elevated" (click)="onHistoryClick()">
-        Histórico
-      </button>
-      <button class="toolbar__button" matButton="elevated" (click)="onAlertsClick()">
-        Alertas
-      </button>
-      <button class="toolbar__button" matButton="elevated" (click)="onNewsClick()">Notícias</button>
-      <button class="toolbar__button" matButton="elevated" (click)="onUsefulLinksClick()">
-        Links Úteis
-      </button>
-      <button class="toolbar__button" matButton="elevated" (click)="onAboutClick()">Sobre</button>
+      <button class="toolbar__button" matButton (click)="onHomeClick()">Início</button>
+      <button class="toolbar__button" matButton (click)="onHistoryClick()">Histórico</button>
+      <button class="toolbar__button" matButton (click)="onAlertsClick()">Alertas</button>
+      <button class="toolbar__button" matButton (click)="onNewsClick()">Notícias</button>
+      <button class="toolbar__button" matButton (click)="onUsefulLinksClick()">Links Úteis</button>
+      <button class="toolbar__button" matButton (click)="onAboutClick()">Sobre</button>
     </div>
   }
 </mat-toolbar>
 
-<mat-sidenav-container class="toolbar-sidenav-container">
+<mat-sidenav-container
+  class="toolbar-sidenav-container"
+  [class.toolbar-sidenav-container--mobile]="isMobile | async"
+>
   <mat-sidenav
     #sidenav
     mode="over"
@@ -88,6 +85,10 @@
       <a mat-list-item (click)="onChangeTheme()">
         <mat-icon matListItemIcon>{{ icon() }}</mat-icon>
         <span matListItemTitle>Tema</span>
+      </a>
+      <a mat-list-item (click)="onChangeContrast()">
+        <mat-icon matListItemIcon>brightness_6</mat-icon>
+        <span matListItemTitle>Contraste</span>
       </a>
     </mat-nav-list>
   </mat-sidenav>

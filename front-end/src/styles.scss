@@ -5,13 +5,16 @@
   --border-color-blue-light: #abc7ff4a;
 
   --background-color-card: #f7f7f7;
+  --background-color-toolbar: #12459c;
 
   --font-color: #12459c;
   --font-color-title: #12459c;
   --font-color-inverse: #ffffff;
   --font-color-secondary: #136bc2;
+  --font-color-toolbar: #d7e3ff;
   --color-shadow: #00001e28;
   --color-border: #2020200e;
+  --color-border-divider: #ffffff91;
 }
 
 * {
@@ -21,7 +24,8 @@
 }
 
 html {
-  height: 100%;
+  width: 100%;
+  height: 100vh;
 
   @include mat.theme(
     (
@@ -36,6 +40,7 @@ html {
 }
 
 body {
+  width: 100%;
   height: 100vh;
 }
 
