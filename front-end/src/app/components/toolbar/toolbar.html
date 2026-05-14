@@ -3,13 +3,23 @@
     <strong>Monitora Hidro</strong>
 
     @if (!(isMobile | async)) {
-      <button
-        matMiniFab
-        aria-label="Button of set the theme from application"
-        (click)="onChangeTheme()"
-      >
-        <mat-icon>{{ icon() }}</mat-icon>
-      </button>
+      <div class="toolbar__modes">
+        <button
+          matMiniFab
+          aria-label="Button of set the theme from application"
+          (click)="onChangeTheme()"
+        >
+          <mat-icon>{{ icon() }}</mat-icon>
+        </button>
+
+        <button
+          matMiniFab
+          aria-label="Button of set the contrast from application"
+          (click)="onChangeContrast()"
+        >
+          <mat-icon [class.contrast-active]="contrastActive()">brightness_6</mat-icon>
+        </button>
+      </div>
     }
 
     @if (isMobile | async) {

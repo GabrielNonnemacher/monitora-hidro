@@ -1,0 +1,11 @@
+@mixin fontColorDefault {
+  color: var(--font-color) !important;
+}
+
+@mixin fontColorSecondary {
+  color: var(--font-color-secondary) !important;
+}
+
+@mixin fontColorInverse {
+  color: var(--font-color-inverse) !important;
+}

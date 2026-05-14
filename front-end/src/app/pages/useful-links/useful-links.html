@@ -1,37 +1,31 @@
 <section class="useful-links">
-  <h3 class="useful-links__title">Links Úteis</h3>
+  <h3 class="title-page">Links Úteis</h3>
 
-  <div class="useful-links__list">
-    <a class="card" href="https://www.inmet.gov.br" target="_blank" rel="noopener noreferrer">
-      <mat-icon class="useful-links__icon">cloud</mat-icon>
-      <div class="useful-links__info">
-        <h4 class="useful-links__item-title">INMET - Instituto Nacional de Meteorologia</h4>
-        <p class="useful-links__item-description">Previsão do tempo e alertas meteorológicos</p>
-      </div>
-    </a>
+  <div class="container-cards">
+    @for (link of links; track link.id) {
+      <div class="card" target="_blank" rel="noopener noreferrer">
+        <div class="useful-links__title">
+          <mat-icon class="useful-links__icon">{{ link.icon }}</mat-icon>
+          <h4 class="useful-links__item-title">{{ link.name }}</h4>
+        </div>
 
-    <a class="card" href="https://www.ana.gov.br" target="_blank" rel="noopener noreferrer">
-      <mat-icon class="useful-links__icon">water</mat-icon>
-      <div class="useful-links__info">
-        <h4 class="useful-links__item-title">ANA - Agência Nacional das Águas</h4>
-        <p class="useful-links__item-description">Monitoramento de recursos hídricos</p>
-      </div>
-    </a>
+        <p class="useful-links__item-description">{{ link.description }}</p>
 
-    <a class="card" href="https://www.defesacivil.gov.br" target="_blank" rel="noopener noreferrer">
-      <mat-icon class="useful-links__icon">warning</mat-icon>
-      <div class="useful-links__info">
-        <h4 class="useful-links__item-title">Defesa Civil Nacional</h4>
-        <p class="useful-links__item-description">Alertas e orientações de segurança</p>
+        <div class="useful-links__actions">
+          <a
+            matButton="filled"
+            [href]="link.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            [matTooltip]="'Acessar ' + link.url"
+            matTooltipPosition="below"
+            matTooltipHideDelay="200"
+          >
+            <span>Acessar</span>
+            <mat-icon>arrow_forward</mat-icon>
+          </a>
+        </div>
       </div>
-    </a>
-
-    <a class="card" href="https://www.cprm.gov.br" target="_blank" rel="noopener noreferrer">
-      <mat-icon class="useful-links__icon">map</mat-icon>
-      <div class="useful-links__info">
-        <h4 class="useful-links__item-title">CPRM - Serviço Geológico do Brasil</h4>
-        <p class="useful-links__item-description">Monitoramento geológico e hidrológico</p>
-      </div>
-    </a>
+    }
   </div>
 </section>

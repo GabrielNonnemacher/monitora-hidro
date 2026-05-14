@@ -1,34 +1,56 @@
-
 @use '@angular/material' as mat;
 
 :root {
-  --white-color: #ffffff;
+  --white-color: #ffffffdc;
   --border-color-blue-light: #abc7ff4a;
-  --font-color-dark: var(--mat-sys-primary);
-  --background-color-light: var(--mat-sys-primary-container);
-}
 
+  --background-color-card: #f7f7f7;
+
+  --font-color: #12459c;
+  --font-color-title: #12459c;
+  --font-color-inverse: #ffffff;
+  --font-color-secondary: #136bc2;
+  --color-shadow: #00001e28;
+  --color-border: #2020200e;
+}
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color: var(--font-color-dark);
 }
 
 html {
   height: 100%;
-  @include mat.theme((
-    color: (
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
+
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
 }
 
 body {
   height: 100vh;
 }
 
+.title-page {
+  width: 100%;
+  font-size: 1.75rem;
+  line-height: 1.875rem;
+  font-weight: 600;
+  margin: 1rem 0 1rem;
+  color: var(--font-color-title) !important;
+}
+
+@media (max-width: 768px) {
+  .title-page {
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+  }
+}

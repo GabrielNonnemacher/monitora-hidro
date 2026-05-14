@@ -12,16 +12,29 @@ import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'toolbar',
-  imports: [MatToolbarModule, MatIconModule, MatButtonModule, MatSidenavModule, MatListModule, AsyncPipe, MatDividerModule],
+  imports: [
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatListModule,
+    AsyncPipe,
+    MatDividerModule,
+  ],
   templateUrl: './toolbar.html',
   styleUrl: './toolbar.scss',
 })
 export class Toolbar {
   private readonly router = inject(Router);
   private readonly breakpointObserver = inject(BreakpointObserver);
+
+  protected readonly sidenavOpened = signal(false);
+  protected readonly isMobile = this.breakpointObserver
+    .observe('(max-width: 725px)')
+    .pipe(map((result) => result.matches));
+
+  public readonly contrastActive = model<boolean>();
   public readonly isDarkTheme = model<boolean>();
-  public readonly isMobile = this.breakpointObserver.observe('(max-width: 725px)').pipe(map(result => result.matches));
-  public readonly sidenavOpened = signal(false);
 
   protected readonly icon = computed<string>(() =>
     this.isDarkTheme() ? 'light_mode' : 'dark_mode',
@@ -29,6 +42,10 @@ export class Toolbar {
 
   protected onChangeTheme(): void {
     this.isDarkTheme.update((value) => !value);
+  }
+
+  protected onChangeContrast(): void {
+    this.contrastActive.update((value) => !value);
   }
 
   public onHistoryClick(): void {
@@ -62,6 +79,6 @@ export class Toolbar {
   }
 
   public toggleSidenav(): void {
-    this.sidenavOpened.update(value => !value);
+    this.sidenavOpened.update((value) => !value);
   }
 }

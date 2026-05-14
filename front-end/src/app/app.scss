@@ -5,10 +5,31 @@
 
 .dark {
   color-scheme: dark;
-  background-color: var(--mat-sys-surface);
+  --font-color: #ebe6e8eb;
+  --font-color-title: #fff;
+  --font-color-secondary: #dadadaa2;
+  --mat-sys-background: #080c0e;
+  --color-border: #55555522;
+  --color-shadow: #47474711;
+  --mat-button-filled-container-color: #11274d;
+  --background-color-card: #171a20c0 !important;
 }
 
 .light {
   color-scheme: light;
-  background-color: var(--mat-sys-surface);
+  --mat-sys-background: #f3f9ff;
+  --font-color: #12459c;
+}
+
+.contrast {
+  color-scheme: dark;
+  --font-color: #ffffff;
+  --font-color-title: #fff;
+  --font-color-secondary: #ffffff;
+  --mat-sys-background: #000 !important;
+  --color-border: #ffffff !important;
+  --color-shadow: transparent;
+  --mat-button-filled-container-color: #fff;
+  --font-color-inverse: #000 !important;
+  --background-color-card: #000 !important;
 }
