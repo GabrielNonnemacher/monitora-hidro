@@ -13,7 +13,7 @@ describe('ChartComponent', () => {
 
     fixture = TestBed.createComponent(ChartComponent);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    fixture.detectChanges();
   });
 
   it('should create', () => {
