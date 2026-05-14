@@ -22,7 +22,9 @@ export class App {
   private setThemeDarkOrLight(): void {
     effect(() => {
       this.isDarkTheme();
+      !this.isDarkTheme();
       this.classTheme.set(this.isDarkTheme() ? 'dark' : 'light');
+      this.contrastActive.set(false);
     });
   }
 
