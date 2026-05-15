@@ -1,10 +1,19 @@
-.about {
+@use 'styles/mixins' as mixins;
+
+:host {
   width: 100%;
   padding: 1rem;
   display: flex;
+  justify-content: center;
+}
+
+.about {
+  width: 100%;
+  display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 2rem;
+  justify-content: center;
+  gap: 1rem;
+  @include mixins.container();
 
   &__title {
     font-size: 1.5rem;
@@ -21,24 +30,32 @@
   &__item-title {
     font-size: 1.125rem;
     font-weight: 600;
-    color: var(--text-color);
+    @include mixins.fontColorDefault();
   }
 
   &__item-description {
     font-size: 1rem;
     line-height: 1.5;
-    color: var(--text-color);
+    @include mixins.fontColorSecondary();
   }
 }
 
 .card {
   width: 100%;
-  padding: 1rem 1rem 1rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 0.5rem;
-  border: 2px solid var(--border-color-blue-light);
+  justify-content: space-between;
+  gap: 1rem;
+  border: 1px solid var(--color-border);
   border-radius: 1rem;
-  box-shadow: 0 4px 12px var(--border-color-blue-light);
+  box-shadow: 0 4px 12px var(--color-shadow);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease;
+  background-color: var(--background-color-card);
+
+  &:hover {
+    transform: translateY(-2px);
+  }
 }
