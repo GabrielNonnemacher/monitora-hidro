@@ -4,30 +4,18 @@
 
     @if (!(isMobile | async)) {
       <div class="toolbar__modes">
-        <button
-          matMiniFab
-          aria-label="Button of set the theme from application"
-          (click)="onChangeTheme()"
-        >
+        <button matMiniFab aria-label="Button of set the theme from application" (click)="onChangeTheme()">
           <mat-icon>{{ icon() }}</mat-icon>
         </button>
 
-        <button
-          matMiniFab
-          aria-label="Button of set the contrast from application"
-          (click)="onChangeContrast()"
-        >
+        <button matMiniFab aria-label="Button of set the contrast from application" (click)="onChangeContrast()">
           <mat-icon [class.contrast-active]="contrastActive()">brightness_6</mat-icon>
         </button>
       </div>
     }
 
     @if (isMobile | async) {
-      <button
-        matMiniFab
-        aria-label="Button of set the theme from application"
-        (click)="toggleSidenav()"
-      >
+      <button matMiniFab aria-label="Button of set the theme from application" (click)="toggleSidenav()">
         <mat-icon>menu</mat-icon>
       </button>
     }
@@ -37,7 +25,6 @@
     <div class="toolbar__buttons">
       <button class="toolbar__button" matButton (click)="onHomeClick()">Início</button>
       <button class="toolbar__button" matButton (click)="onHistoryClick()">Histórico</button>
-      <button class="toolbar__button" matButton (click)="onAlertsClick()">Alertas</button>
       <button class="toolbar__button" matButton (click)="onNewsClick()">Notícias</button>
       <button class="toolbar__button" matButton (click)="onUsefulLinksClick()">Links Úteis</button>
       <button class="toolbar__button" matButton (click)="onAboutClick()">Sobre</button>
@@ -45,17 +32,8 @@
   }
 </mat-toolbar>
 
-<mat-sidenav-container
-  class="toolbar-sidenav-container"
-  [class.toolbar-sidenav-container--mobile]="isMobile | async"
->
-  <mat-sidenav
-    #sidenav
-    mode="over"
-    position="end"
-    [(opened)]="sidenavOpened"
-    (closed)="sidenavOpened.set(false)"
-  >
+<mat-sidenav-container class="toolbar-sidenav-container" [class.toolbar-sidenav-container--mobile]="isMobile | async">
+  <mat-sidenav #sidenav mode="over" position="end" [(opened)]="sidenavOpened" (closed)="sidenavOpened.set(false)">
     <mat-nav-list>
       <a mat-list-item (click)="onHomeClick()">
         <mat-icon matListItemIcon>home</mat-icon>
