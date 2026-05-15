@@ -1,29 +1,36 @@
 <section class="news">
-  <h3 class="news__title">Notícias</h3>
+  <h3 class="title-page">Notícias</h3>
 
-  <div class="news__list">
-    <div class="card">
-      <h4 class="news__item-title">Nível do Rio acima do normal</h4>
-      <p class="news__item-date">12/05/2026</p>
-      <p class="news__item-description">
-        O nível do rio atingiu 9,5 metros hoje, acima do limite normal de 8 metros. Recomendamos atenção aos moradores das áreas próximas.
-      </p>
-    </div>
+  <div class="container-cards">
+    @for (news of news; track news.id) {
+      <div class="card" target="_blank" rel="noopener noreferrer">
+        <div class="news__image">
+          <img [src]="news.image" alt="" srcset="" />
+        </div>
 
-    <div class="card">
-      <h4 class="news__item-title">Manutenção no sistema de monitoramento</h4>
-      <p class="news__item-date">10/05/2026</p>
-      <p class="news__item-description">
-        Será realizada uma manutenção preventiva no sistema de monitoramento na próxima semana, sem interrupção no serviço.
-      </p>
-    </div>
+        <div class="news__title">
+          <h4 class="news__item-title">{{ news.title }}</h4>
+        </div>
 
-    <div class="card">
-      <h4 class="news__item-title">Chuva intensa prevista para os próximos dias</h4>
-      <p class="news__item-date">08/05/2026</p>
-      <p class="news__item-description">
-        A previsão do tempo indica chuva intensa para os próximos 3 dias. Acompanhe o nível do rio em tempo real pelo aplicativo.
-      </p>
-    </div>
+        <p class="news__item-date"><strong>Publicado:</strong> {{ news.date }}</p>
+
+        <p class="news__item-description">{{ news.description.slice(0, 135) + '...' }}</p>
+
+        <div class="news__actions">
+          <a
+            matButton="filled"
+            [href]="news.link"
+            target="_blank"
+            rel="noopener noreferrer"
+            [matTooltip]="'Acessar ' + news.link.slice(0, 30) + '...'"
+            matTooltipPosition="below"
+            matTooltipHideDelay="200"
+          >
+            <span>Acessar</span>
+            <mat-icon>arrow_forward</mat-icon>
+          </a>
+        </div>
+      </div>
+    }
   </div>
 </section>
