@@ -7,10 +7,6 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/history/history').then((m) => m.HistoryPage),
   },
   {
-    path: 'alerts',
-    loadComponent: () => import('./pages/alerts/alerts').then((m) => m.AlertsPage),
-  },
-  {
     path: 'news',
     loadComponent: () => import('./pages/news/news').then((m) => m.NewsPage),
   },

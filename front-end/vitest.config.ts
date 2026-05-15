@@ -27,7 +27,6 @@ export default defineConfig({
         'src/app/components/chart/chart.ts',
         'src/app/components/divider/divider.ts',
         'src/app/pages/news/news.ts',
-        'src/app/pages/alerts/alerts.ts',
         'src/app/pages/home/home.ts',
       ],
       thresholds: {

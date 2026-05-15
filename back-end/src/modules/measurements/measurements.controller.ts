@@ -10,6 +10,7 @@ import {
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { ApiHeader, ApiTags } from '@nestjs/swagger';
 import { CreateMeasurementDto } from './dto/create-measurement.dto';
+import { ChartMeasurementDataDto } from './dto/response-chart-measurement.dto';
 import { MeasurementDto } from './dto/response-measurement.dto';
 import { MeasurementsService } from './measurements.service';
 
@@ -29,11 +30,12 @@ export class MeasurementsController {
 
   @UseGuards(ApiKeyGuard)
   @ApiHeader(ApiKeyGuardExample)
-  @Get(':locationId/dashboard')
-  public async findAllMeasurements(
+  @Get(':locationId/dashboard/:filter')
+  public async getChartData(
     @Param('locationId') locationId: string,
-  ): Promise<ApiResponse<MeasurementDto[] | null>> {
-    return this.measurementsService.findAllMeasurements(locationId);
+    @Param('filter') filter: string,
+  ): Promise<ApiResponse<ChartMeasurementDataDto[] | null>> {
+    return this.measurementsService.getChartData(locationId, filter);
   }
 
   @UseGuards(HmacGuard)
