@@ -12,6 +12,7 @@ import {
 import { Chart, registerables } from 'chart.js';
 import { LocalStorageService } from '../../services/local-storage';
 import { ThemeService } from '../../services/theme';
+import { COLORS } from '../../shared/constants/chart.constants';
 import { LABELS_CHART_MONTHS } from '../../shared/constants/history.constants';
 import { FilterChart } from '../../shared/types/filter-chart.type';
 
@@ -27,19 +28,26 @@ export class ChartComponent implements AfterViewInit {
   private readonly themeService = inject(ThemeService);
   private readonly localStorageService = inject(LocalStorageService);
 
+  private readonly colorsChart = COLORS;
+
   private readonly canvas = viewChild<ElementRef<HTMLCanvasElement>>('chart');
   private readonly charts = signal<Chart<'line', number[], string> | undefined>(undefined);
 
   protected readonly monthMode = signal<boolean>(true);
+  protected readonly lightMode = computed(() => this.themeService.theme() === 'light');
   protected readonly contrastActive = computed(() => this.themeService.theme() === 'contrast');
   protected readonly locationInfos = computed(() => {
     return this.localStorageService.get<any>('locale')?.locationInfos;
   });
   protected readonly labels = computed(() => {
     if (this.filter() === FilterChart.months) {
-      return this.data().labels?.map((label: string) => LABELS_CHART_MONTHS[label]);
+      return this.data()?.labels?.map((label: string) => {
+        const monthNumber = label.split('/');
+        return LABELS_CHART_MONTHS[monthNumber[0]] + '/' + monthNumber[1];
+      });
     }
-    return this.data().labels;
+
+    return this.data()?.labels;
   });
 
   public readonly data = input.required<{ labels: string[]; data: number[] }>();
@@ -58,17 +66,21 @@ export class ChartComponent implements AfterViewInit {
               data: this.data()?.data,
               fill: true,
               tension: 0,
-              pointBackgroundColor: this.contrastActive() ? '#000000' : '#1976d2',
-              borderColor: this.contrastActive() ? '#fff' : '#1976d2',
-              backgroundColor: this.contrastActive() ? '#f0f0f0a5' : '#296fb4c4',
+              pointBackgroundColor: this.contrastActive()
+                ? this.colorsChart.black
+                : this.colorsChart.primary,
+              borderColor: this.contrastActive() ? this.colorsChart.white : this.colorsChart.border,
+              backgroundColor: this.contrastActive()
+                ? this.colorsChart.backgroundContrast
+                : this.colorsChart.background,
               borderWidth: 2,
             },
             {
               label: 'Normal',
               data: this.labels().map(() => this.locationInfos()?.default),
-              borderColor: '#4CAF50',
-              pointBackgroundColor: '#4CAF50',
-              borderDash: [5, 5],
+              borderColor: this.colorsChart.default,
+              pointBackgroundColor: this.colorsChart.default,
+              borderDash: [10, 4],
               borderWidth: 2,
               pointRadius: 0,
               fill: false,
@@ -76,9 +88,9 @@ export class ChartComponent implements AfterViewInit {
             {
               label: 'Alerta',
               data: this.labels().map(() => this.locationInfos()?.attention),
-              borderColor: '#FFC107',
-              pointBackgroundColor: '#FFC107',
-              borderDash: [5, 5],
+              borderColor: this.colorsChart.attention,
+              pointBackgroundColor: this.colorsChart.attention,
+              borderDash: [10, 4],
               borderWidth: 2,
               pointRadius: 0,
               fill: false,
@@ -86,9 +98,9 @@ export class ChartComponent implements AfterViewInit {
             {
               label: 'Inundação',
               data: this.labels().map(() => this.locationInfos()?.flood),
-              borderColor: '#FF9800',
-              pointBackgroundColor: '#FF9800',
-              borderDash: [5, 5],
+              borderColor: this.colorsChart.flood,
+              pointBackgroundColor: this.colorsChart.flood,
+              borderDash: [10, 4],
               borderWidth: 2,
               pointRadius: 0,
               fill: false,
@@ -96,9 +108,9 @@ export class ChartComponent implements AfterViewInit {
             {
               label: 'Extremo',
               data: this.labels().map(() => this.locationInfos()?.extreme),
-              borderColor: '#F44336',
-              pointBackgroundColor: '#F44336',
-              borderDash: [5, 5],
+              borderColor: this.colorsChart.extreme,
+              pointBackgroundColor: this.colorsChart.extreme,
+              borderDash: [10, 4],
               borderWidth: 2,
               pointRadius: 0,
               fill: false,
@@ -133,7 +145,7 @@ export class ChartComponent implements AfterViewInit {
                 size: 18,
               },
               padding: 24,
-              color: this.contrastActive() ? '#fff' : '#005cbb',
+              color: this.lightMode() ? this.colorsChart.primary : this.colorsChart.white,
             },
           },
           scales: {},

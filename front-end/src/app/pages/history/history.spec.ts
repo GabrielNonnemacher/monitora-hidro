@@ -79,12 +79,7 @@ describe('HistoryPage', () => {
 
   it('should return current theme', () => {
     expect(component['theme']()).toBe('light');
-
     themeService.theme.set('contrast');
-
-    console.log(themeService.theme());
-    console.log(component['theme']());
-
     expect(component['theme']()).toBe('contrast');
   });
 
