@@ -8,6 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { AsyncPipe } from '@angular/common';
 import { BreakpointService } from '../../services/breakpoint.service';
+import { ThemeService } from '../../services/theme';
 
 @Component({
   selector: 'toolbar',
@@ -25,6 +26,7 @@ import { BreakpointService } from '../../services/breakpoint.service';
 })
 export class Toolbar {
   private readonly router = inject(Router);
+  private readonly themeService = inject(ThemeService);
   private readonly breakpointService = inject(BreakpointService);
 
   protected readonly sidenavOpened = signal(false);
@@ -39,10 +41,14 @@ export class Toolbar {
 
   protected onChangeTheme(): void {
     this.isDarkTheme.update((value) => !value);
+    this.themeService.setTheme(this.isDarkTheme() ? 'dark' : 'light');
   }
 
   protected onChangeContrast(): void {
     this.contrastActive.update((value) => !value);
+    this.themeService.setTheme(
+      this.contrastActive() ? 'contrast' : this.isDarkTheme() ? 'dark' : 'light',
+    );
   }
 
   public onHistoryClick(): void {

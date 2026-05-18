@@ -1,0 +1,16 @@
+@use 'styles/mixins' as mixins;
+
+.loader {
+  height: 400px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  &__text {
+    font-size: 1.125rem;
+    @include mixins.fontColorDefault();
+  }
+}

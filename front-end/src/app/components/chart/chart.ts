@@ -1,14 +1,21 @@
-import { AfterViewInit, Component, computed, ElementRef, input, signal, viewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  computed,
+  ElementRef,
+  inject,
+  input,
+  signal,
+  viewChild,
+} from '@angular/core';
 
 import { Chart, registerables } from 'chart.js';
+import { LocalStorageService } from '../../services/local-storage';
+import { ThemeService } from '../../services/theme';
+import { LABELS_CHART_MONTHS } from '../../shared/constants/history.constants';
+import { FilterChart } from '../../shared/types/filter-chart.type';
 
 Chart.register(...registerables);
-
-const normal = 8;
-const alert = 12;
-const flood = 15;
-const extreme = 19;
-
 
 @Component({
   selector: 'chart',
@@ -17,18 +24,27 @@ const extreme = 19;
   styleUrl: './chart.scss',
 })
 export class ChartComponent implements AfterViewInit {
+  private readonly themeService = inject(ThemeService);
+  private readonly localStorageService = inject(LocalStorageService);
+
+  private readonly canvas = viewChild<ElementRef<HTMLCanvasElement>>('chart');
   private readonly charts = signal<Chart<'line', number[], string> | undefined>(undefined);
-  protected readonly canvas = viewChild<ElementRef<HTMLCanvasElement>>('chart');
-  protected readonly monthMode = signal(true);
-  readonly location = input<string>('Localização');
-  protected readonly data = computed(() =>
-    this.monthMode() ? [5, 18, 8, 14, 8, 22] : [13, 23, 15, 25, 70, 33],
-  );
-  protected readonly labels = computed(() =>
-    this.monthMode()
-      ? ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun']
-      : ['2021', '2022', '2023', '2024', '2025', '2026'],
-  );
+
+  protected readonly monthMode = signal<boolean>(true);
+  protected readonly contrastActive = computed(() => this.themeService.theme() === 'contrast');
+  protected readonly locationInfos = computed(() => {
+    return this.localStorageService.get<any>('locale')?.locationInfos;
+  });
+  protected readonly labels = computed(() => {
+    if (this.filter() === FilterChart.months) {
+      return this.data().labels?.map((label: string) => LABELS_CHART_MONTHS[label]);
+    }
+    return this.data().labels;
+  });
+
+  public readonly data = input.required<{ labels: string[]; data: number[] }>();
+  public readonly filter = input.required<FilterChart>();
+  public readonly location = input.required<any>();
 
   private createChart(): void {
     this.charts.set(
@@ -39,17 +55,17 @@ export class ChartComponent implements AfterViewInit {
           datasets: [
             {
               label: 'Nível',
-              data: this.data(),
+              data: this.data()?.data,
               fill: true,
               tension: 0,
-              pointBackgroundColor: '#1976d2',
-              borderColor: '#1976d2',
-              backgroundColor: '#55a5f59c',
-              borderWidth: 4,
+              pointBackgroundColor: this.contrastActive() ? '#000000' : '#1976d2',
+              borderColor: this.contrastActive() ? '#fff' : '#1976d2',
+              backgroundColor: this.contrastActive() ? '#f0f0f0a5' : '#296fb4c4',
+              borderWidth: 2,
             },
             {
               label: 'Normal',
-              data: this.labels().map(() => normal),
+              data: this.labels().map(() => this.locationInfos()?.default),
               borderColor: '#4CAF50',
               pointBackgroundColor: '#4CAF50',
               borderDash: [5, 5],
@@ -59,7 +75,7 @@ export class ChartComponent implements AfterViewInit {
             },
             {
               label: 'Alerta',
-              data: this.labels().map(() => alert),
+              data: this.labels().map(() => this.locationInfos()?.attention),
               borderColor: '#FFC107',
               pointBackgroundColor: '#FFC107',
               borderDash: [5, 5],
@@ -69,7 +85,7 @@ export class ChartComponent implements AfterViewInit {
             },
             {
               label: 'Inundação',
-              data: this.labels().map(() => flood),
+              data: this.labels().map(() => this.locationInfos()?.flood),
               borderColor: '#FF9800',
               pointBackgroundColor: '#FF9800',
               borderDash: [5, 5],
@@ -79,7 +95,7 @@ export class ChartComponent implements AfterViewInit {
             },
             {
               label: 'Extremo',
-              data: this.labels().map(() => extreme),
+              data: this.labels().map(() => this.locationInfos()?.extreme),
               borderColor: '#F44336',
               pointBackgroundColor: '#F44336',
               borderDash: [5, 5],
@@ -105,29 +121,22 @@ export class ChartComponent implements AfterViewInit {
                 textAlign: 'center',
                 font: {
                   size: 14,
-                }
+                },
               },
-              onClick: () => { },
-              onHover: () => { },
+              onClick: () => {},
+              onHover: () => {},
             },
             title: {
               display: true,
-              text: `Grafico do Nível`,
+              text: `Grafico do Nível (metros)`,
               font: {
                 size: 18,
               },
               padding: 24,
-              color: "#005cbb"
+              color: this.contrastActive() ? '#fff' : '#005cbb',
             },
           },
-          scales: {
-            y: {
-              title: {
-                display: true,
-                text: 'metros',
-              },
-            },
-          },
+          scales: {},
         },
       }),
     );
@@ -137,10 +146,11 @@ export class ChartComponent implements AfterViewInit {
     this.monthMode.update((old) => !old);
     const chart = this.charts();
     if (chart) {
+      const { attention, flood, extreme } = this.locationInfos() || {};
       chart.data.labels = this.labels();
-      chart.data.datasets[0].data = this.data();
-      chart.data.datasets[1].data = this.labels().map(() => normal);
-      chart.data.datasets[2].data = this.labels().map(() => alert);
+      chart.data.datasets[0].data = this.data().data;
+      chart.data.datasets[1].data = this.labels().map(() => this.locationInfos()?.default);
+      chart.data.datasets[2].data = this.labels().map(() => attention);
       chart.data.datasets[3].data = this.labels().map(() => flood);
       chart.data.datasets[4].data = this.labels().map(() => extreme);
       chart.update();

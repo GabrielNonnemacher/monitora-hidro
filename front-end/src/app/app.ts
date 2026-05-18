@@ -1,6 +1,7 @@
-import { Component, effect, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Toolbar } from './components/toolbar/toolbar';
+import { ThemeService } from './services/theme';
 
 @Component({
   selector: 'app-root',
@@ -9,31 +10,10 @@ import { Toolbar } from './components/toolbar/toolbar';
   styleUrl: './app.scss',
 })
 export class App {
+  private readonly themeService = inject(ThemeService);
+
   protected readonly isDarkTheme = signal<boolean>(false);
   protected readonly contrastActive = signal<boolean>(false);
 
-  protected readonly classTheme = signal<string>('light');
-
-  public constructor() {
-    this.setThemeContrast();
-    this.setThemeDarkOrLight();
-  }
-
-  private setThemeDarkOrLight(): void {
-    effect(() => {
-      this.isDarkTheme();
-      !this.isDarkTheme();
-      this.classTheme.set(this.isDarkTheme() ? 'dark' : 'light');
-      this.contrastActive.set(false);
-    });
-  }
-
-  private setThemeContrast(): void {
-    effect(() => {
-      this.contrastActive();
-      this.classTheme.set(
-        this.contrastActive() ? 'contrast' : this.isDarkTheme() ? 'dark' : 'light',
-      );
-    });
-  }
+  protected readonly classTheme = computed<string>(() => this.themeService.theme());
 }

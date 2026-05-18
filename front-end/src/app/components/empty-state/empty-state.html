@@ -1,0 +1,14 @@
+<div class="empty-state">
+  @if (hasError()) {
+    <div class="empty-state__error">
+      <img src="./error.png" alt="" srcset="" />
+      <p>Ocorreu um erro ao carregar os dados</p>
+      
+    </div>
+  } @else {
+    <div class="empty-state__no-data">
+      <img src="./no-data.png" alt="" srcset="" />
+      <p>Não há dados para serem exibidos</p>
+    </div>
+  }
+</div>

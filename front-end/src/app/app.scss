@@ -17,12 +17,21 @@
   --background-color-toolbar: #0d2c4d !important;
   --font-color-toolbar: #ffffff;
   --color-border-divider: #dadadaa2;
+  --mat-progress-spinner-active-indicator-color: #595959;
+  --mat-button-protected-label-text-color: #fff;
+  --mat-button-filled-label-text-color: #fff;
+  --mat-button-protected-label-text-color: #fff;
+  --mat-button-protected-container-color: #3c3c3c82;
+  --background-color-chart: #55555510 !important;
+  --border-color-chart: #65656510 !important;
 }
 
 .light {
   color-scheme: light;
   --mat-sys-background: #f3f9ff;
   --font-color: #12459c;
+  --background-color-chart: #65656510 !important;
+  --border-color-chart: #65656510 !important;
 }
 
 .contrast {
@@ -41,4 +50,11 @@
   --font-color-toolbar: #ffffff;
   --mat-sys-primary-container: #fff;
   --mat-sys-on-primary-container: #000;
+  --mat-progress-spinner-active-indicator-color: #fff;
+  --mat-button-filled-label-text-color: #000000;
+  --mat-button-filled-container-color: #ffffff;
+  --mat-button-outlined-outline-color: #fff;
+  --mat-button-outlined-label-text-color: #fff;
+  --background-color-chart: #000000 !important;
+  --border-color-chart: #ffffff !important;
 }

@@ -1,20 +1,20 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+import { NgClass } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 import { finalize } from 'rxjs';
-import { SelectLocale } from '../../components/select-locale/select-locale';
 import { Divider } from '../../components/divider/divider';
+import { Loader } from '../../components/loader/loader';
+import { SelectLocale } from '../../components/select-locale/select-locale';
 import { LocalStorageService } from '../../services/local-storage';
 import { MeasurementService } from '../../services/measurement';
 import { formatterNumberToPtBr, formatterToDate } from '../../shared/utils/formatter.util';
-import { NgClass } from '@angular/common';
-import { MatListModule } from "@angular/material/list";
 
 @Component({
   selector: 'app-home',
-  imports: [MatProgressSpinnerModule, MatIconModule, MatButtonModule, SelectLocale, Divider, NgClass, MatListModule],
+  imports: [MatIconModule, MatButtonModule, SelectLocale, Divider, NgClass, MatListModule, Loader],
   templateUrl: './home.html',
   styleUrl: './home.scss',
   standalone: true,

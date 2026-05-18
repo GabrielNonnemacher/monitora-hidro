@@ -75,6 +75,7 @@ export class SelectLocale implements OnInit {
       city: this.cityId(),
       locationPoint: this.locationPointId(),
       locationPointDescription: this.getLocationPointDescription(),
+      locationInfos: this.locationPoint(),
     });
 
     this.confirm.emit();
@@ -108,6 +109,10 @@ export class SelectLocale implements OnInit {
         value: location._id,
         viewValue: location.name,
         active: location.active,
+        default: location.default,
+        flood: location.flood,
+        extreme: location.extreme,
+        attention: location.attention,
       }));
       this.locationPoints.set(locations);
     });

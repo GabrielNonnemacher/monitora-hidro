@@ -1,8 +1,50 @@
 <section class="history">
+  <h3 class="title-page">Histórico</h3>
 
-  <h3 class="history__title">Histórico</h3>
+  @let dataChart = data();
 
-  <div class="history__chart">
-    <chart [location]="location()" />
-  </div>
+  @if (loading() || themeLoading()) {
+    <loader />
+  } @else if (dataChart) {
+    <div class="history__chart">
+      <chart [location]="location()" [data]="dataChart" [filter]="filter()" />
+    </div>
+
+    @if (isMobile | async) {
+      <form class="history__form">
+        <mat-form-field appearance="outline">
+          <mat-label>Data Gráfico</mat-label>
+
+          <mat-select [value]="filter()" (valueChange)="getData($event)">
+            @for (type of typesButtons; track type) {
+              <mat-option [value]="type">
+                {{ labelsButtons[type] }}
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </form>
+    } @else {
+      <div class="history__buttons">
+        @for (type of typesButtons; track type) {
+          <button
+            #historyButton="matButton"
+            [id]="type"
+            [type]="type"
+            class="history__button"
+            [matButton]="
+              filter() === type ? 'filled' : theme() === 'contrast' ? 'outlined' : 'elevated'
+            "
+            (click)="getData(type)"
+          >
+            {{ labelsButtons[type] }}
+          </button>
+        }
+      </div>
+    }
+  } @else {
+    <div class="history__empty">
+      <empty-state [hasError]="error()" />
+    </div>
+  }
 </section>

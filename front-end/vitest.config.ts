@@ -24,9 +24,6 @@ export default defineConfig({
         'src/app/components/select-locale/constants.ts',
         'src/app/components/select-locale/models.ts',
         'src/app/components/select-locale/select-locale.ts',
-        'src/app/components/chart/chart.ts',
-        'src/app/components/divider/divider.ts',
-        'src/app/pages/news/news.ts',
         'src/app/pages/home/home.ts',
       ],
       thresholds: {
