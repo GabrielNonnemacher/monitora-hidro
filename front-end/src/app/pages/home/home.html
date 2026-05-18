@@ -1,7 +1,6 @@
 <section class="home">
   @if (loading()) {
-    <mat-spinner />
-    <p>Carregando...</p>
+    <loader />
   } @else if (isEditing()) {
     <div class="card">
       <select-locale (confirm)="onChangeEditing()" />

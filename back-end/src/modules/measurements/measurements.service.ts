@@ -37,7 +37,9 @@ export class MeasurementsService {
   ): Promise<ApiResponse<ChartMeasurementDataDto[] | null>> {
     const now = new Date();
     let startDate = new Date();
+
     let groupId: any;
+    let projectX: any;
     let limit = 0;
     let error = false;
 
@@ -45,26 +47,44 @@ export class MeasurementsService {
       case FilterChart.years:
         startDate.setFullYear(now.getFullYear() - 5);
         groupId = { $year: '$date' };
+        projectX = { $toString: '$_id' };
         limit = 5;
         break;
       case FilterChart.months:
         startDate.setMonth(now.getMonth() - 12);
-        groupId = { $month: '$date' };
+        groupId = {
+          year: { $year: '$date' },
+          month: { $month: '$date' },
+        };
+        projectX = {
+          $concat: [
+            { $toString: '$_id.month' },
+            '/',
+            { $toString: '$_id.year' },
+          ],
+        };
         limit = 12;
-        break;
-      case FilterChart.weeks:
-        startDate.setDate(now.getDate() - 35);
-        groupId = { $isoWeek: '$date' };
-        limit = 5;
         break;
       case FilterChart.days:
         startDate.setDate(now.getDate() - 12);
-        groupId = { $dayOfMonth: '$date' };
+        groupId = {
+          $dateToString: {
+            format: '%d/%m/%Y',
+            date: '$date',
+          },
+        };
+        projectX = '$_id';
         limit = 12;
         break;
       case FilterChart.today:
         startDate.setHours(now.getHours() - 5);
-        groupId = { $hour: '$date' };
+        groupId = {
+          $dateToString: {
+            format: '%H:%M',
+            date: '$date',
+          },
+        };
+        projectX = '$_id';
         limit = 5;
         break;
       default:
@@ -96,13 +116,13 @@ export class MeasurementsService {
         $project: {
           _id: 0,
           measurement: { $round: ['$measurement', 2] },
-          x: { $toString: '$_id' },
+          x: projectX,
         },
       },
     ]);
 
     return {
-      success: error,
+      success: !error,
       data: result ?? null,
       message: error ? 'Erro no filtro' : undefined,
     };
