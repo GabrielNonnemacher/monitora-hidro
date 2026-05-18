@@ -8,25 +8,25 @@
   } @else {
     @let data = latestMeasurement();
 
-    <h3 class="home__title">Monitoramento</h3>
+    <h3 class="title-page">Monitoramento</h3>
 
     <div class="card home__level-card" [ngClass]="'home__level-card--' + severity()">
       <div class="level">
         <h2 class="level__title">Nível Atual do Rio</h2>
-
-        <div class="level__tag" [ngClass]="'level__tag--' + severity()">
-          <mat-icon class="level__icon" [ngClass]="'level__icon--' + severity()">
-            {{ getSeverityIcon(severity()) }}
-          </mat-icon>
-          <span class="level__severity" [ngClass]="'level__severity--' + severity()">
-            {{ getSeverityLabel(severity()) }}
-          </span>
-        </div>
       </div>
 
       <div class="home__level-value">
         <span class="home__level-number">{{ data.measurement }}</span>
         <span class="home__level-unit">metros</span>
+      </div>
+
+      <div class="level__tag" [ngClass]="'level__tag--' + severity()">
+        <mat-icon class="level__icon" [ngClass]="'level__icon--' + severity()">
+          {{ getSeverityIcon(severity()) }}
+        </mat-icon>
+        <span class="level__severity" [ngClass]="'level__severity--' + severity()">
+          {{ getSeverityLabel(severity()) }}
+        </span>
       </div>
 
       <div class="home__location">
@@ -50,19 +50,29 @@
         <div class="legend__items">
           <div class="legend__item">
             <mat-icon class="legend__icon legend__icon--normal">check_circle</mat-icon>
-            <span class="legend__label">Normal (até 8m)</span>
+            <span class="legend__label"
+              >Normal (até {{ locationInfos()?.attention | decimalComma }}m)</span
+            >
           </div>
           <div class="legend__item">
             <mat-icon class="legend__icon legend__icon--alert">warning</mat-icon>
-            <span class="legend__label">Alerta (8m - 12m)</span>
+            <span class="legend__label"
+              >Alerta ({{ locationInfos()?.attention | decimalComma }}m -
+              {{ locationInfos()?.flood | decimalComma }}m)</span
+            >
           </div>
           <div class="legend__item">
             <mat-icon class="legend__icon legend__icon--flood">error</mat-icon>
-            <span class="legend__label">Inundação (12m - 15m)</span>
+            <span class="legend__label"
+              >Inundação ({{ locationInfos()?.flood | decimalComma }}m -
+              {{ locationInfos()?.extreme | decimalComma }}m)</span
+            >
           </div>
           <div class="legend__item">
             <mat-icon class="legend__icon legend__icon--extreme">dangerous</mat-icon>
-            <span class="legend__label">Extremo (acima 15m)</span>
+            <span class="legend__label"
+              >Extremo (acima {{ locationInfos()?.extreme | decimalComma }}m)</span
+            >
           </div>
         </div>
       </div>
