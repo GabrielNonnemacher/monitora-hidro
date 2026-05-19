@@ -4,7 +4,7 @@
   <form class="select-locale__form">
     <mat-form-field appearance="outline">
       <mat-label>Estado</mat-label>
-      <mat-select (valueChange)="onStateChange($event)">
+      <mat-select [value]="stateId()" (valueChange)="onStateChange($event)">
         @for (state of states(); track state) {
           <mat-option [value]="state.value">
             {{ state.viewValue }}
@@ -16,6 +16,7 @@
     <mat-form-field appearance="outline" [class.disabled]="!stateId() || cities().length === 0">
       <mat-label>Cidade</mat-label>
       <mat-select
+        [value]="cityId()"
         (valueChange)="onCityChange($event)"
         [disabled]="!stateId() || cities().length === 0"
       >

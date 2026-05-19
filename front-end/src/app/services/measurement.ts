@@ -22,7 +22,9 @@ export class MeasurementService {
 
   public getMeasurementDataChart(locationId: string, filter: FilterChart): Observable<any> {
     const headers = this.setHeaders();
-    return this.http.get<any>(`${this.BASE_URL}/measurements/${locationId}/dashboard/${filter}`, { headers });
+    return this.http.get<any>(`${this.BASE_URL}/measurements/${locationId}/dashboard/${filter}`, {
+      headers,
+    });
   }
 
   private setHeaders(): HttpHeaders {

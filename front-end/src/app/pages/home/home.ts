@@ -6,12 +6,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { finalize, interval, switchMap } from 'rxjs';
 import { Divider } from '../../components/divider/divider';
+import { EmptyStateComponent } from '../../components/empty-state/empty-state';
 import { Loader } from '../../components/loader/loader';
 import { SelectLocale } from '../../components/select-locale/select-locale';
 import { LocalStorageService } from '../../services/local-storage';
 import { MeasurementService } from '../../services/measurement';
 import { DecimalCommaPipe } from '../../shared/pipes/number-pipe';
 import { formatterNumberToPtBr, formatterToDate } from '../../shared/utils/formatter.util';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -24,12 +26,14 @@ import { formatterNumberToPtBr, formatterToDate } from '../../shared/utils/forma
     MatListModule,
     Loader,
     DecimalCommaPipe,
+    EmptyStateComponent,
   ],
   templateUrl: './home.html',
   styleUrl: './home.scss',
   standalone: true,
 })
 export class HomePage implements OnInit {
+  private readonly router = inject(Router);
   private readonly localStorageService = inject(LocalStorageService);
   private readonly measurementService = inject(MeasurementService);
 
@@ -37,6 +41,8 @@ export class HomePage implements OnInit {
   protected readonly isEditing = signal<boolean>(true);
   protected readonly latestMeasurement = signal<any>(null);
   protected readonly locale = signal<any>(null);
+  protected readonly stateEmpty = signal<{ hasError: boolean; isEmpty: boolean } | null>(null);
+
   protected readonly severity = computed(() => {
     const data = this.latestMeasurement();
     if (!data) return 'normal';
@@ -54,6 +60,11 @@ export class HomePage implements OnInit {
   protected onChangeEditing(): void {
     this.loading.set(true);
     this.checkLocale();
+  }
+
+  protected onChangeLocation(): void {
+    this.stateEmpty.set(null);
+    this.isEditing.set(true);
   }
 
   protected getSeverity(level: number): string {
@@ -137,6 +148,11 @@ export class HomePage implements OnInit {
       .pipe(finalize(() => this.loading.set(false)))
       .subscribe({
         next: (data) => {
+          if (data === null) {
+            this.stateEmpty.set({ hasError: false, isEmpty: true });
+            return;
+          }
+
           this.latestMeasurement.set({
             ...data,
             measurement: formatterNumberToPtBr(data.measurement),
