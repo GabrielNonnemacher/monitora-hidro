@@ -46,7 +46,12 @@
       </mat-select>
     </mat-form-field>
 
-    <button class="confirm-button" (click)="onSubmit()" [class.disabled]="!locationPointId()">
+    <button
+      class="confirm-button"
+      (click)="onSubmit()"
+      [disabled]="!stateId() || !cityId() || !locationPointId()"
+      [class.disabled]="!stateId() || !cityId() || !locationPointId()"
+    >
       <mat-icon>check</mat-icon>
       Confirmar
     </button>

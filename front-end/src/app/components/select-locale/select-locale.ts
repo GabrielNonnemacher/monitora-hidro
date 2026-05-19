@@ -51,6 +51,8 @@ export class SelectLocale implements OnInit {
     this.state.set(this.states().find((state) => state.value === stateId));
     this.cityId.set(null);
     this.city.set(null);
+    this.locationPointId.set(null);
+    this.locationPoint.set(null);
     this.getCities(stateId);
   }
 
@@ -67,6 +69,10 @@ export class SelectLocale implements OnInit {
     this.locationPoint.set(
       this.locationPoints().find((location) => location.value === locationPointId),
     );
+
+    console.log(this.state());
+    console.log(this.city());
+    console.log(this.locationPoint());
   }
 
   protected onSubmit(): void {
@@ -101,6 +107,7 @@ export class SelectLocale implements OnInit {
         active: city.active,
       }));
       this.cities.set(cities);
+      this.city.set(cities.find((city: any) => city.value === this.cityId()));
     });
   }
 
@@ -116,13 +123,14 @@ export class SelectLocale implements OnInit {
         attention: location.attention,
       }));
       this.locationPoints.set(locations);
+      this.locationPoint.set(locations.find((location: any) => location.value === this.locationPointId()));
     });
   }
 
   private getLocationPointDescription(): string {
     const locationPointName = this.locationPoint()?.viewValue || '';
-    const cityName = this.city()?.viewValue || '';
-    const stateName = this.state()?.viewValue || '';
+    const cityName = this.city()?.viewValue || this.city() || '';
+    const stateName = this.state()?.viewValue || this.state() || '';
     return formatterLocationPointDescription(stateName, cityName, locationPointName);
   }
 
@@ -130,11 +138,8 @@ export class SelectLocale implements OnInit {
     const locale = this.localStorageService.get<any>('locale');
 
     if (locale) {
-      this.stateId.set(locale.state);
       this.onStateChange(locale.state);
-      this.cityId.set(locale.city);
       this.onCityChange(locale.city);
-      this.locationPointId.set(locale.locationPoint);
       this.onLocationPointChange(locale.locationPoint);
     }
   }
