@@ -1,14 +1,31 @@
 <section class="home">
   @if (loading()) {
     <loader />
+  } @else if (stateEmpty()) {
+    <div class="home__header">
+      <h3 class="title-page">Monitoramento</h3>
+    </div>
+
+    <div class="card">
+      <empty-state [hasError]="!!stateEmpty()?.hasError" />
+      <button [matButton]="'filled'" (click)="onChangeLocation()">Alterar Local</button>
+    </div>
   } @else if (isEditing()) {
+    <div class="home__header">
+      <h3 class="title-page">Monitoramento</h3>
+    </div>
+
     <div class="card">
       <select-locale (confirm)="onChangeEditing()" />
     </div>
   } @else {
     @let data = latestMeasurement();
 
-    <h3 class="title-page">Monitoramento</h3>
+    <div class="home__header">
+      <h3 class="title-page">Monitoramento</h3>
+
+      <button [matButton]="'filled'" (click)="onChangeLocation()">Alterar Local</button>
+    </div>
 
     <div class="card home__level-card" [ngClass]="'home__level-card--' + severity()">
       <div class="level">
@@ -31,8 +48,7 @@
 
       <div class="home__location">
         <span class="home__location-text">
-          <strong>Localização:</strong>
-          {{ locale().locationPointDescription }}
+          <span>{{ locale().locationPointDescription }}</span>
         </span>
         <mat-icon class="home__location-icon">location_on</mat-icon>
       </div>

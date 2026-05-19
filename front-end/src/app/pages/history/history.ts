@@ -70,6 +70,13 @@ export class HistoryPage implements OnInit {
       .pipe(finalize(() => this.loading.set(false)))
       .subscribe({
         next: ({ data }) => {
+          if (!data || !data.length) {
+            this.data.set(null);
+            this.error.set(false);
+            this.router.navigate(['/']);
+            return;
+          }
+
           this.data.set({
             data: data?.map((item: any) => item?.measurement),
             labels: data?.map((item: any) => item?.x),
@@ -80,6 +87,14 @@ export class HistoryPage implements OnInit {
           this.error.set(true);
         },
       });
+  }
+
+  protected onChangeLocation(): void {
+    this.router.navigate(['/'], {
+      queryParams: {
+        editing: true,
+      },
+    });
   }
 
   public ngOnInit(): void {

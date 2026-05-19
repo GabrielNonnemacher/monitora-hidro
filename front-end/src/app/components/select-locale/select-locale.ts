@@ -89,6 +89,7 @@ export class SelectLocale implements OnInit {
         active: state.active,
       }));
       this.states.set(states);
+      this.getLocation();
     });
   }
 
@@ -123,5 +124,18 @@ export class SelectLocale implements OnInit {
     const cityName = this.city()?.viewValue || '';
     const stateName = this.state()?.viewValue || '';
     return formatterLocationPointDescription(stateName, cityName, locationPointName);
+  }
+
+  private getLocation(): void {
+    const locale = this.localStorageService.get<any>('locale');
+
+    if (locale) {
+      this.stateId.set(locale.state);
+      this.onStateChange(locale.state);
+      this.cityId.set(locale.city);
+      this.onCityChange(locale.city);
+      this.locationPointId.set(locale.locationPoint);
+      this.onLocationPointChange(locale.locationPoint);
+    }
   }
 }
