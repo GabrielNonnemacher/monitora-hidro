@@ -13,7 +13,6 @@ import { LocalStorageService } from '../../services/local-storage';
 import { MeasurementService } from '../../services/measurement';
 import { DecimalCommaPipe } from '../../shared/pipes/number-pipe';
 import { formatterNumberToPtBr, formatterToDate } from '../../shared/utils/formatter.util';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -33,7 +32,6 @@ import { Router } from '@angular/router';
   standalone: true,
 })
 export class HomePage implements OnInit {
-  private readonly router = inject(Router);
   private readonly localStorageService = inject(LocalStorageService);
   private readonly measurementService = inject(MeasurementService);
 
@@ -112,7 +110,6 @@ export class HomePage implements OnInit {
       this.loading.set(true);
       this.isEditing.set(false);
       this.firstGetLastestMeasurement(locale.locationPoint);
-      this.getLastestMeasurement(locale.locationPoint);
     } else {
       this.isEditing.set(true);
       this.loading.set(false);
@@ -159,6 +156,7 @@ export class HomePage implements OnInit {
             dateDescription: formatterToDate(data.date),
           });
           this.localStorageService.set('latestMeasurement', data);
+          this.getLastestMeasurement(locationId);
         },
       });
   }
