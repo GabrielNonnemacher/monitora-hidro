@@ -116,7 +116,7 @@ export class HomePage implements OnInit {
     }
   }
 
-  private getLastestMeasurement(locationId: string, timeInterval: number = 120000): void {
+  private getLastestMeasurement(locationId: string, timeInterval: number = 30000): void {
     interval(timeInterval)
       .pipe(
         switchMap(() =>
