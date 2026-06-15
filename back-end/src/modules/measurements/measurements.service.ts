@@ -132,8 +132,11 @@ export class MeasurementsService {
     createMeasurementDto: CreateMeasurementDto,
   ): Promise<ApiResponse<MeasurementDto | null>> {
     const date = new Date(createMeasurementDto.date);
-    date.setHours(date.getHours() - 3);
-    createMeasurementDto.date = date;
+    createMeasurementDto.date = new Date(
+      date.toLocaleString('en-US', {
+        timeZone: 'America/Sao_Paulo',
+      }),
+    );
     const createdMeasurement = new this.measurementModel(createMeasurementDto);
     await createdMeasurement.save();
 
