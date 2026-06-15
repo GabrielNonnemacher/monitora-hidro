@@ -131,15 +131,16 @@ export class MeasurementsService {
   public async create(
     createMeasurementDto: CreateMeasurementDto,
   ): Promise<ApiResponse<MeasurementDto | null>> {
+    const date = new Date(createMeasurementDto.date);
+    date.setHours(date.getHours() - 3);
+    createMeasurementDto.date = date;
     const createdMeasurement = new this.measurementModel(createMeasurementDto);
     await createdMeasurement.save();
 
     return {
       success: true,
-      data: createdMeasurement ?? null,
-      message: createdMeasurement
-        ? 'Salvo com sucesso'
-        : 'Erro ao criar medição',
+      data: createdMeasurement,
+      message: 'Salvo com sucesso',
     };
   }
 }
